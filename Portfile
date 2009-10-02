@@ -4,17 +4,20 @@
 PortSystem          1.0
 
 name                natsort
-version             1.0.1
+version             1.0.3
 categories          sysutils
 maintainers         nmurray
 description         Martin Pool's Natural Order String Comparison Sorting Utility
 long_description    natsort is a natural order string comparison sorting utility. Written by Martin Pool.
 homepage            http://sourcefrog.net/projects/natsort/
 platforms           darwin
-master_sites        sourceforge
+# master_sites        sourceforge
+master_sites        http://localhost/experiments/ports/natsort/releases/natsort-1.0.3.tar.gz \
+                    http://ypcmc07292/experiments/ports/natsort/releases/natsort-1.0.3.tar.gz
 
-checksums           md5 b6a8aab0da19ca25f163e95053e257d1 \
-                    sha1 59ae01df157628cbbcadbf0742066dd21e306e12
+checksums           md5 968f2cc2d6c4f4836e19bf6c0dd815a0 \
+                    sha1 913d452fd676dab35079b6dec87299404e3b4bb3
 
-patch {}
-configure {}
+use_configure       no
+# destroot.args       BINDIR=${destroot}${prefix}/bin
+# destroot.destdir    PREFIX=${destroot}${prefix}

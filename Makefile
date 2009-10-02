@@ -1,8 +1,11 @@
-VERSION=1.0.2
+VERSION=1.0.3
 RELEASE_DIR=releases/natsort-$(VERSION)
 CC=gcc
-prefix = /usr
-BINDIR=${prefix}/bin
+prefix=/usr
+
+BINDIR=bin
+# DEFAULT_BINDIR=${prefix}/bin
+# [ "x" = "x$BINDIR" ] && BINDIR=${DEFAULT_BINDIR}
 
 all: natsort
 natsort: bin strnatcmp.o natsort.o
@@ -25,4 +28,6 @@ sums:
 	md5sum releases/natsort-$(VERSION).tar.gz
 	shasum releases/natsort-$(VERSION).tar.gz
 install: natsort
-	install -d $(BINDIR)
+	mkdir -p $(DESTDIR)
+	# install -d $(DESTDIR)
+	install $(BINDIR)/natsort $(DESTDIR)
