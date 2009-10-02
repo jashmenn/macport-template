@@ -13,8 +13,8 @@ homepage            http://sourcefrog.net/projects/natsort/
 platforms           darwin
 master_sites        sourceforge
 
-checksums           md5 e3776630b1777995fc417e004364f88d \
-                    sha1 379cff4873e852c1f10662d11d067ac1decd875f
+checksums           md5 b6a8aab0da19ca25f163e95053e257d1 \
+                    sha1 59ae01df157628cbbcadbf0742066dd21e306e12
 
 patch {}
 configure {}
