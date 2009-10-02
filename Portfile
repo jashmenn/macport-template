@@ -4,117 +4,17 @@
 PortSystem          1.0
 
 name                natsort
-version             1.0.0
+version             1.0.1
 categories          sysutils
 maintainers         nmurray
 description         Martin Pool's Natural Order String Comparison Sorting Utility
 long_description    natsort is a natural order string comparison sorting utility. Written by Martin Pool.
 homepage            http://sourcefrog.net/projects/natsort/
 platforms           darwin
-master_sites        http://oss.oetiker.ch/rrdtool/pub/ \
-                    ftp://ftp.pucpr.br/rrdtool/
+master_sites        sourceforge
 
-checksums           md5 dafa161bc9c61e57636a6085c87c1fe8 \
-                    sha1 5da610e1c8bc01b80abc21ab9e98e004363b429c \
-                    rmd160 0c1147242adf476f5e93f4d59b553ee3ea378b23
+checksums           md5 e3776630b1777995fc417e004364f88d \
+                    sha1 379cff4873e852c1f10662d11d067ac1decd875f
 
-depends_lib         port:perl5.8 \
-                    port:tcl \
-                    port:zlib
-
-configure.args      --enable-perl-site-install \
-                    --mandir=${prefix}/share/man
-
-
-PortSystem              1.0
-PortGroup               muniversal 1.0
-
-name                    wget
-version                 1.11.4
-revision                3
-categories              net www
-maintainers             ryandesign
-homepage                http://www.gnu.org/software/wget/
-platforms               darwin freebsd
-use_parallel_build      yes
-master_sites            gnu
-
-description \
-    internet file retriever
-
-long_description \
-    GNU Wget is a free software package for retrieving files using HTTP, \
-    HTTPS and FTP, the most widely-used Internet protocols. It is a \
-    non-interactive commandline tool, so it may easily be called from \
-    scripts, cron jobs, terminals without Xsupport, etc.
-
-checksums \
-    md5 69e8a7296c0e12c53bd9ffd786462e87 \
-    sha1 a78a3b71fd59504df3ff3dbc0a2195a1410e9eac \
-    rmd160 1cec99b073fcf64dd362977b0b88a55f8f47bbb8
-
-configure.args \
-    --with-libssl-prefix=${prefix}
-
-depends_build \
-    bin:makeinfo:texinfo \
-    bin:pod2man:perl5
-
-depends_lib \
-    port:openssl \
-    port:gettext
-
-# So that +universal can use gettext and openssl on Tiger; see #18276.
-configure.ldflags-append        -liconv
-if {![variant_isset no_ssl]} {
-    depends_build-append        port:pkgconfig
-    pre-configure {
-        configure.ldflags-append    [exec ${prefix}/bin/pkg-config --libs libssl]
-    }
-}
-
-# As of 1.11.3, the tests are known to be incomplete or even broken. See
-# ${worksrcpath}/tests/README for the current status of the test suite.
-test.run                no
-
-variant no_ssl description {Build without SSL support} {
-    depends_lib-delete      port:openssl
-    configure.args-append   --without-ssl
-    configure.args-delete   --with-libssl-prefix=${prefix}
-}
-
-patchfiles \
-    patch-prefix.diff
-
-post-patch {
-    reinplace "s|@PREFIX@|${prefix}|g" \
-        ${worksrcpath}/ChangeLog \
-        ${worksrcpath}/README \
-        ${worksrcpath}/NEWS \
-        ${worksrcpath}/doc/sample.wgetrc \
-        ${worksrcpath}/doc/wget.texi
-}
-
-post-destroot {
-    # Install documentation.
-    set docdir ${destroot}${prefix}/share/doc/${name}-${version}
-    xinstall -d ${docdir}
-    foreach docfile {AUTHORS COPYING NEWS README} {
-        xinstall -W ${worksrcpath} -m 0644 ${docfile} ${docdir}/${docfile}.txt
-    }
-    xinstall -W ${worksrcpath} -m 0644 ChangeLog ${docdir}/ChangeLog.txt
-    foreach changelog {doc src} {
-        xinstall -W ${worksrcpath} -m 0644 ${changelog}/ChangeLog ${docdir}/ChangeLog-${changelog}.txt
-    }
-    
-    # Rename sample wgetrc file so we don't clobber a user's real config file on upgrade.
-    move ${destroot}${prefix}/etc/wgetrc ${destroot}${prefix}/etc/wgetrc.sample
-}
-
-post-activate {
-    if {![file exists ${prefix}/etc/wgetrc]} {
-        ui_msg "To customize wget, you can copy wgetrc.sample to wgetrc"
-        ui_msg "in ${prefix}/etc and then make changes."
-    }
-}
-
+patch {}
+configure {}
