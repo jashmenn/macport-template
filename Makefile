@@ -1,21 +1,21 @@
-VERSION=1.0.3
+VERSION=1.0.5
 RELEASE_DIR=releases/natsort-$(VERSION)
 CC=gcc
 prefix=/usr
+DEFAULT_BINDIR=${prefix}/bin
+NATSORT_DEST=natsort
 
-BINDIR=bin
-# DEFAULT_BINDIR=${prefix}/bin
-# [ "x" = "x$BINDIR" ] && BINDIR=${DEFAULT_BINDIR}
+[ "x" = "x$BINDIR" ] && BINDIR=${DEFAULT_BINDIR}
 
 all: natsort
 natsort: bin strnatcmp.o natsort.o
-	gcc -o bin/natsort strnatcmp.o natsort.o
+	gcc -o $(NATSORT_DEST) strnatcmp.o natsort.o
 natsort.o: natsort.c
 	gcc -Wall -c -o natsort.o natsort.c
 strnatcmp.o: strnatcmp.c
 	gcc -Wall -c -o strnatcmp.o strnatcmp.c
 clean:
-	rm -rf *.o bin/* ./releases/*
+	rm -rf $(NATSORT_DEST) *.o bin/* ./releases/*
 releases:
 	mkdir releases
 bin:
@@ -27,7 +27,10 @@ tarball: releases clean
 sums: 
 	md5sum releases/natsort-$(VERSION).tar.gz
 	shasum releases/natsort-$(VERSION).tar.gz
+
 install: natsort
-	mkdir -p $(DESTDIR)
-	# install -d $(DESTDIR)
-	install $(BINDIR)/natsort $(DESTDIR)
+	install -d $(BINDIR)
+	if [ -e $(NATSORT_DEST) ]; then \
+	  install -s $(NATSORT_DEST) $(BINDIR)/$(NATSORT_DEST); \
+	fi
+
