@@ -1,3 +1,4 @@
 natsort
 *.o
 .autosession.vim
+.DS_Store
