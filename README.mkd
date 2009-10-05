@@ -1,0 +1,6 @@
+Custom Macport Example
+======================
+
+This project is a macport of `natsort - Natural Order String Comparison by Martin Pool` [link](http://sourcefrog.net/projects/natsort/). 
+The goal is to provide a forkable template for creating your own
+macport.
